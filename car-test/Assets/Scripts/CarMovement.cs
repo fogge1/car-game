@@ -6,7 +6,7 @@ using TMPro;
 public class CarMovement : MonoBehaviour
 {
 
-    public float MotorForce, SteerForce, BreakForce, friction;
+    public float SteerForce, BreakForce, friction;
     public WheelCollider wheelfrontleft, wheelfrontrightSphere, wheelbackleft, wheelbackright;
     public GameObject car;
 
@@ -14,9 +14,11 @@ public class CarMovement : MonoBehaviour
     private double Speed;
     private Vector3 startingPosition, speedvec;
 
+
     private void Start()
     {
         startingPosition = transform.position;
+        Debug.Log(PlayerPrefs.GetFloat("motorForce"));
     }
 
     private void Update()
@@ -27,7 +29,7 @@ public class CarMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-        float v = Input.GetAxis("Vertical") * MotorForce;
+        float v = Input.GetAxis("Vertical") * PlayerPrefs.GetFloat("motorForce"); // MotorForce
 
 
         wheelbackleft.motorTorque = v;

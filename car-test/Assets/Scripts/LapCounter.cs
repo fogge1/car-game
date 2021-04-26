@@ -36,5 +36,9 @@ public class LapCounter : MonoBehaviour
     {
         laps++;
         startLapTime = Time.time;
+        if (laps >0)
+        {
+            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + 1);
+        }
     }
 }

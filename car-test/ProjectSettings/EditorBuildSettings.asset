@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ChooseCarScene.unity
+    guid: 464e09a2eee4302418d6dc65ff464f40
+  - enabled: 1
+    path: Assets/Scenes/ModularTrack.unity
+    guid: 9a0877c793c004934bf737f3bdff1da3
   m_configObjects: {}
