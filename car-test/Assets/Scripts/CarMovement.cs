@@ -18,7 +18,7 @@ public class CarMovement : MonoBehaviour
     private void Start()
     {
         startingPosition = transform.position;
-        Debug.Log(PlayerPrefs.GetFloat("motorForce"));
+        
     }
 
     private void Update()
@@ -29,13 +29,14 @@ public class CarMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-        float v = Input.GetAxis("Vertical") * PlayerPrefs.GetFloat("motorForce"); // MotorForce
+        float v = Input.GetAxis("Vertical") * 5000; // 5000 = MotorForce
 
 
         wheelbackleft.motorTorque = v;
         wheelbackright.motorTorque = v;
-
+        
         car.transform.Rotate(Vector3.up * SteerForce * Time.deltaTime * Input.GetAxis("Horizontal"), Space.World);
+        
 
         if (Input.GetKey(KeyCode.Space))
         {

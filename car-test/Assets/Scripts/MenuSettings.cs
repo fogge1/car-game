@@ -9,32 +9,20 @@ using UnityEngine.SceneManagement;
 public class MenuSettings : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Text amountCoins;
-    public Text motorForce;
-    public Text getMoreCoins;
 
     public void playGame()
     {
-        SceneManager.LoadScene(1); // Load game scene
+        SceneManager.LoadScene(PlayerPrefs.GetInt("selectedMap")); // Load game scene
     }
 
-    public void upgradeMotorForce()
-    {   
-        if (PlayerPrefs.GetInt("coins") > 0)
-        {
-            PlayerPrefs.SetFloat("motorForce", PlayerPrefs.GetFloat("motorForce") + 50);
-            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") - 1);
-        } 
-        else
-        {
-            getMoreCoins.text = "Get more coins you nub";
-        }
-  
-    }
-
-    public void resetMotorForce()
+    public void selectMap()
     {
-        PlayerPrefs.SetFloat("motorForce", 50);
+        SceneManager.LoadScene(5);
+    }
+
+    public void SelectCar()
+    {
+        SceneManager.LoadScene(1);
     }
 
     void Start()
@@ -45,7 +33,6 @@ public class MenuSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        amountCoins.text = PlayerPrefs.GetInt("coins").ToString();
-        motorForce.text = "MotorForce: " + PlayerPrefs.GetFloat("motorForce").ToString();
+       
     }
 }

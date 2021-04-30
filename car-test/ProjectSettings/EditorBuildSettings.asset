@@ -6,9 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: a4ad0130c07779a40a4d539a017e8905
+  - enabled: 1
     path: Assets/Scenes/ChooseCarScene.unity
     guid: 464e09a2eee4302418d6dc65ff464f40
   - enabled: 1
-    path: Assets/Scenes/ModularTrack.unity
+    path: Assets/Scenes/ModularMap.unity
     guid: 9a0877c793c004934bf737f3bdff1da3
+  - enabled: 1
+    path: Assets/Scenes/DriftMap.unity
+    guid: e82a0c7cf6aa6504daa551b17979d57e
+  - enabled: 1
+    path: Assets/Scenes/SprintMap.unity
+    guid: 46478303f7c601e4e8584cb7f8d31d7f
+  - enabled: 1
+    path: Assets/Scenes/SelectMapScene.unity
+    guid: 6779fbccda1abfb48b2bae6165d90698
   m_configObjects: {}

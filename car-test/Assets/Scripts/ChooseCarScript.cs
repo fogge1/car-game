@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ChooseCarScript : MonoBehaviour
 {
@@ -10,7 +10,9 @@ public class ChooseCarScript : MonoBehaviour
     
     void OnMouseDown()
     {
-        Instantiate(car, new Vector3(0, 0, 0), Quaternion.identity);
+        PlayerPrefs.SetString("selectedCar", gameObject.name);
+        Debug.Log(PlayerPrefs.GetString("selectedCar"));
+        SceneManager.LoadScene(0);
     }
 
     void Start()
