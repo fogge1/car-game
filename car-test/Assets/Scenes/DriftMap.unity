@@ -50307,6 +50307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yellowcar: {fileID: 4468043865683576981, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
+  bluecar: {fileID: 1216336052455082, guid: 5d2d294a55c8dad4f863791b2ec6aa9e, type: 3}
 --- !u!114 &889254260
 MonoBehaviour:
   m_ObjectHideFlags: 0
