@@ -1483,6 +1483,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2544994905857071666, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
+      propertyPath: skidmarksController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4468043865683576981, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
       propertyPath: m_Name
       value: racecaryellow
@@ -1534,6 +1538,18 @@ PrefabInstance:
     - target: {fileID: 4474611714523073407, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
       propertyPath: m_RootOrder
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616458015199976361, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
+      propertyPath: skidmarksController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350128471858401808, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
+      propertyPath: skidmarksController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859566556515527892, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}
+      propertyPath: skidmarksController
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2280b77f3e695124e936303f9ccb8433, type: 3}

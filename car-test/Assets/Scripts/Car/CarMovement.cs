@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class CarMovement : MonoBehaviour
 {
+    public GameObject car;
 
     public float SteerForce, BreakForce, friction;
+    public float motorForce = 5000f;
+
     public WheelCollider wheelfrontleft, wheelfrontrightSphere, wheelbackleft, wheelbackright;
-    public GameObject car;
-    public float maxSteerAngle = 30;
+    public Transform frontLeftT, frontRightT;
+    public Transform rearLeftT, rearRightT;
+    public float maxSteerAngle = 30f;
+    
 
     [SerializeField] TextMeshProUGUI speedometer;
     private double Speed;
@@ -19,10 +25,27 @@ public class CarMovement : MonoBehaviour
     private float m_verticalInput;
     private float m_steeringAngle;
 
-    public Transform frontLeftT, frontRightT;
-    public Transform rearLeftT, rearRightT;
+    private void Start()
+    {
+        startingPosition = transform.position;
 
-    public float motorForce = 5000;
+    }
+
+    void FixedUpdate()
+    {
+        Steer();
+        UpdateWheelPoses();
+        Accelerate();
+        GetSpeed();
+    }
+
+    void GetSpeed()
+    {
+        speedvec = (transform.position - startingPosition) / Time.deltaTime;
+        Speed = (float)(speedvec.magnitude) * 3.6; // 3.6 is the constant to convert a value from m/s to km/h, because i think that the speed wich is being calculated here is coming in m/s, if you want it in mph, you should use ~2,2374 instead of 3.6 (assuming that 1 mph = 1.609 kmh)
+        startingPosition = transform.position;
+        speedometer.text = Math.Round(Speed, 0) + "km/h";  // or mph
+    }
 
     private void UpdateWheelPose(WheelCollider _collider, Transform _transform)
     {
@@ -35,25 +58,9 @@ public class CarMovement : MonoBehaviour
         _transform.rotation = _quat;
     }
 
-    private void Start()
-    {
-        startingPosition = transform.position;
-    }
-
-    private void Update()
-    {
-        
-    }
-
-    public void GetInput()
-    {
-        m_horizontalInput = Input.GetAxis("Horizontal");
-        m_verticalInput = Input.GetAxis("Vertical");
-    }
-
     private void Steer()
     {
-        m_steeringAngle = maxSteerAngle * m_horizontalInput;
+        m_steeringAngle = maxSteerAngle * Input.GetAxis("Horizontal"); ;
         wheelfrontleft.steerAngle = m_steeringAngle;
         wheelfrontrightSphere.steerAngle = m_steeringAngle;
     }
@@ -69,8 +76,7 @@ public class CarMovement : MonoBehaviour
     private void Accelerate()
     {
 
-        float v = Input.GetAxis("Vertical") * 5000; // 5000 = MotorForce
-
+        float v = Input.GetAxis("Vertical") * 5000f;
 
         wheelbackleft.motorTorque = v;
         wheelbackright.motorTorque = v;
@@ -104,29 +110,6 @@ public class CarMovement : MonoBehaviour
             wheelbackleft.brakeTorque = 0;
             wheelbackright.brakeTorque = 0;
         }
-    }
-
-    void FixedUpdate()
-    {
-
-        //float v = Input.GetAxis("Vertical") * 5000; // 5000 = MotorForce
-
-
-        //wheelbackleft.motorTorque = v;
-        //wheelbackright.motorTorque = v;
-
-        //car.transform.Rotate(Vector3.up * SteerForce * Time.deltaTime * Input.GetAxis("Horizontal"), Space.World);
-        GetInput();
-        Steer();
-        UpdateWheelPoses();
-        Accelerate();
-
-
-        speedvec = (transform.position - startingPosition) / Time.deltaTime;
-        Speed = (int)(speedvec.magnitude); // 3.6 is the constant to convert a value from m/s to km/h, because i think that the speed wich is being calculated here is coming in m/s, if you want it in mph, you should use ~2,2374 instead of 3.6 (assuming that 1 mph = 1.609 kmh)
-
-        startingPosition = transform.position;
-        speedometer.text = Speed * 3.6 + "m/s";  // or mph
     }
 
 }
