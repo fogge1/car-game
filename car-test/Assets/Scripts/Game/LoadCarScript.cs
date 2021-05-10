@@ -32,7 +32,7 @@ public class LoadCarScript : MonoBehaviour
 
             else if (PlayerPrefs.GetString("selectedCar") == "racecarblue")
             {
-                Instantiate(bluecar, new Vector3(245, 4, 217), Quaternion.identity);
+                Instantiate(bluecar, new Vector3(958, 225, 922), Quaternion.identity);
             }
         }
     }

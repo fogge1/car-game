@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseAndRewindGame : MonoBehaviour
 {
@@ -42,6 +43,11 @@ public class PauseAndRewindGame : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R)) 
         {
             StopRewind();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 
