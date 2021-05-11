@@ -35,6 +35,18 @@ public class LoadCarScript : MonoBehaviour
                 Instantiate(bluecar, new Vector3(958, 225, 922), Quaternion.identity);
             }
         }
+        if (SceneManager.GetActiveScene().name == "ModularMap")
+        {
+            if (PlayerPrefs.GetString("selectedCar") == "racecaryellow")
+            {
+                Instantiate(yellowcar, new Vector3(0, 0, 0), Quaternion.identity);
+            }
+
+            else if (PlayerPrefs.GetString("selectedCar") == "racecarblue")
+            {
+                Instantiate(bluecar, new Vector3(0, 0, 0), Quaternion.identity);
+            }
+        }
     }
 
     // Update is called once per frame
