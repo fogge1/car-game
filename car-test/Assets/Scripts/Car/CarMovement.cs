@@ -9,9 +9,9 @@ public class CarMovement : MonoBehaviour
     public GameObject car;
 
     public float SteerForce, BreakForce, friction;
-    public float motorForce = 5000f;
+    private float motorForce = 5000f;
 
-    public WheelCollider wheelfrontleft, wheelfrontrightSphere, wheelbackleft, wheelbackright;
+    public WheelCollider wheelfrontleft, wheelfrontright, wheelbackleft, wheelbackright;
     public Transform frontLeftT, frontRightT;
     public Transform rearLeftT, rearRightT;
     public float maxSteerAngle = 30f;
@@ -19,34 +19,35 @@ public class CarMovement : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI speedometer;
     private double Speed;
-    private Vector3 startingPosition, speedvec;
+    private Vector3 lastPosition, speedvec;
 
-    private float m_horizontalInput;
-    private float m_verticalInput;
-    private float m_steeringAngle;
+    private float horizontalInput;
+    private float verticalInput;
+    private float steeringAngle;
 
     private void Start()
-    {
-        startingPosition = transform.position;
-
+    {   
+        // Get starting position to 
+        lastPosition = transform.position; 
     }
 
     void FixedUpdate()
     {
-        Steer();
-        UpdateWheelPoses();
-        Accelerate();
-        GetSpeed();
+        steerCar();
+        updateWheelPoses();
+        drive();
+        getSpeed();
     }
 
-    void GetSpeed()
+    void getSpeed()
     {
-        speedvec = (transform.position - startingPosition) / Time.deltaTime;
-        Speed = (float)(speedvec.magnitude) * 3.6; // 3.6 is the constant to convert a value from m/s to km/h, because i think that the speed wich is being calculated here is coming in m/s, if you want it in mph, you should use ~2,2374 instead of 3.6 (assuming that 1 mph = 1.609 kmh)
-        startingPosition = transform.position;
-        speedometer.text = Math.Round(Speed, 0) + "km/h";  // or mph
+        speedvec = (transform.position - lastPosition) / Time.deltaTime; // Define variable for how many position changes since last frame
+        Speed = (float)(speedvec.magnitude) * 3.6; 
+        lastPosition = transform.position;
+        speedometer.text = Math.Round(Speed, 0) + "km/h";
     }
 
+    // Update the wheel mesh position to the wheelcollider position
     private void UpdateWheelPose(WheelCollider _collider, Transform _transform)
     {
         Vector3 _pos = _transform.position;
@@ -58,39 +59,43 @@ public class CarMovement : MonoBehaviour
         _transform.rotation = _quat;
     }
 
-    private void Steer()
+    private void steerCar()
     {
-        m_steeringAngle = maxSteerAngle * Input.GetAxis("Horizontal"); ;
-        wheelfrontleft.steerAngle = m_steeringAngle;
-        wheelfrontrightSphere.steerAngle = m_steeringAngle;
+        steeringAngle = maxSteerAngle * Input.GetAxis("Horizontal"); ;
+        wheelfrontleft.steerAngle = steeringAngle;
+        wheelfrontright.steerAngle = steeringAngle;
     }
 
-    private void UpdateWheelPoses()
+    private void updateWheelPoses()
     {
         UpdateWheelPose(wheelfrontleft, frontLeftT);
-        UpdateWheelPose(wheelfrontrightSphere, frontRightT);
+        UpdateWheelPose(wheelfrontright, frontRightT);
         UpdateWheelPose(wheelbackleft, rearLeftT);
         UpdateWheelPose(wheelbackright, rearRightT);
     }
 
-    private void Accelerate()
+    private void drive()
     {
 
-        float v = Input.GetAxis("Vertical") * 5000f;
+        float v = Input.GetAxis("Vertical") * motorForce;
 
+        // set the torque of the rear wheels to the variable V defined earlier (makes the car move forward)
         wheelbackleft.motorTorque = v;
         wheelbackright.motorTorque = v;
 
+        // brakes te car
         if (Input.GetKey(KeyCode.Space))
         {
             wheelbackleft.brakeTorque = BreakForce;
             wheelbackright.brakeTorque = BreakForce;
         }
+        // When space is released set brakeTorque to 0 to make the car stop braking
         if (Input.GetKeyUp(KeyCode.Space))
         {
             wheelbackleft.brakeTorque = 0;
             wheelbackright.brakeTorque = 0;
         }
+        // If the "driving buttons" isn't getting input slow down the car
         if (Input.GetAxis("Vertical") == 0)
         {
             if (wheelbackleft.brakeTorque <= BreakForce && wheelbackright.brakeTorque <= BreakForce)
@@ -105,6 +110,7 @@ public class CarMovement : MonoBehaviour
             }
 
         }
+        // If the "driving buttons" gets input don't brake
         else
         {
             wheelbackleft.brakeTorque = 0;

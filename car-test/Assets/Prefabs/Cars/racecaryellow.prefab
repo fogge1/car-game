@@ -589,9 +589,8 @@ MonoBehaviour:
   SteerForce: 65
   BreakForce: 50000
   friction: 5000
-  motorForce: 50
   wheelfrontleft: {fileID: 6553453110806094091}
-  wheelfrontrightSphere: {fileID: 8609625796588973740}
+  wheelfrontright: {fileID: 8609625796588973740}
   wheelbackleft: {fileID: 4082085081804827301}
   wheelbackright: {fileID: 6840332629621158147}
   frontLeftT: {fileID: 4470321448436906349}

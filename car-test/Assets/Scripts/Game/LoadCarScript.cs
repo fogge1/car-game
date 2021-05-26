@@ -10,7 +10,7 @@ public class LoadCarScript : MonoBehaviour
     public GameObject bluecar;
 
     void Start()
-    {
+    {   // Spawn choosen car in a position based on the map
         if (SceneManager.GetActiveScene().name == "DriftMap")
         {   
             if (PlayerPrefs.GetString("selectedCar") == "racecaryellow")

@@ -15,7 +15,7 @@ public class PauseAndRewindGame : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   // Get positions and 
         positions = new List<Vector3>();
         rotations = new List<Quaternion>();
     }
@@ -27,45 +27,46 @@ public class PauseAndRewindGame : MonoBehaviour
         {
             if (Time.timeScale == 1)
             {
-                PauseGame();
+                pauseGame();
             }
             else
             {
-                ResumeGame();
+                resumeGame();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartRewind();
+            startRewind();
         }
 
         if (Input.GetKeyUp(KeyCode.R)) 
         {
-            StopRewind();
+            stopRewind();
         }
 
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
         }
+        Debug.Log(positions.Count);
     }
 
     void FixedUpdate()
     {
         if(isRewinding)
         {
-            Rewind();
+            rewind();
         }
         else
         {
-            Record();
+            recordPosition();
         }
 
     }
 
-    void Rewind()
-    {   
+    void rewind()
+    {   // If there are positions and rotations stored transform the car to the first element of the list
         if (positions.Count > 0 && rotations.Count > 0)
         {   
         
@@ -74,30 +75,39 @@ public class PauseAndRewindGame : MonoBehaviour
             transform.rotation = rotations[0];
             rotations.RemoveAt(0);
         }
+        // Otherwise stop rewind
         else
         {
-            StopRewind();
+            stopRewind();
         }
         
     }
 
-    void Record()
+    void recordPosition()
     {
         positions.Insert(0, transform.position);
         rotations.Insert(0, transform.rotation);
+        
+
+        // If positions contain more than 3600 elements (1 minute of recording), then remove the first recorded position and rotation
+        if (positions.Count > 3600)
+        {
+            positions.RemoveAt(positions.Count - 1);
+            rotations.RemoveAt(rotations.Count - 1);
+        }
     }
 
-    void PauseGame()
+    void pauseGame()
     {
         Time.timeScale = 0;
     }
 
-    void ResumeGame()
+    void resumeGame()
     {
         Time.timeScale = 1;
     }
 
-    public void StartRewind()
+    public void startRewind()
     {
         Time.timeScale = 2;
         isRewinding = true;
@@ -105,7 +115,7 @@ public class PauseAndRewindGame : MonoBehaviour
         
     }
 
-    public void StopRewind()
+    public void stopRewind()
     {
         Time.timeScale = 1;
         isRewinding = false;
